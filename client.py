@@ -22,20 +22,20 @@ def connect():
     send_thread.start()
 
 def receive():
-    # Receive data from the server and output it to the output textbox
+    # Receive data from the server and Sending it to the Sending textbox
     while True:
         data = client_socket.recv(1024).decode("utf-8")
         if not data:
             break
-        input_textbox.configure(state=tk.NORMAL)
-        input_textbox.delete("1.0", tk.END)
-        input_textbox.insert(tk.END, data)
-        input_textbox.configure(state=tk.DISABLED)
+        Receiving_textbox.configure(state=tk.NORMAL)
+        Receiving_textbox.delete("1.0", tk.END)
+        Receiving_textbox.insert(tk.END, data)
+        Receiving_textbox.configure(state=tk.DISABLED)
 
 def send():
-    # Send data entered in the output textbox to the server
+    # Send data entered in the Sending textbox to the server
     while True:
-        data = output_queue.get()
+        data = Sending_queue.get()
         if data == "QUIT":
             client_socket.send(data.encode("utf-8"))
             client_socket.close()
@@ -44,12 +44,12 @@ def send():
         client_socket.send(data.encode("utf-8"))
 
 def send_message():
-    # Get the text from the output textbox and add it to the output queue
-    data = output_textbox.get("1.0", "end-1c")
-    output_queue.put(data)
+    # Get the text from the Sending textbox and add it to the Sending queue
+    data = Sending_textbox.get("1.0", "end-1c")
+    Sending_queue.put(data)
     
-    # Clear the output textbox
-    output_textbox.delete("1.0", tk.END)
+    # Clear the Sending textbox
+    Sending_textbox.delete("1.0", tk.END)
 
 
 def close():
@@ -78,13 +78,13 @@ ip_textbox = tk.Entry(root)
 port_label = tk.Label(root, text="Port Number:")
 port_textbox = tk.Entry(root)
 
-# Create the input label and text box
-input_label = tk.Label(root, text="Input")
-input_textbox = tk.Text(root, height=6.5, width=60)
+# Create the Receiving label and text box
+Receiving_label = tk.Label(root, text="Receiving")
+Receiving_textbox = tk.Text(root, height=6.5, width=60)
 
-# Create the output label and text box
-output_label = tk.Label(root, text="Output")
-output_textbox = tk.Text(root, height=6.5, width=60)
+# Create the Sending label and text box
+Sending_label = tk.Label(root, text="Sending")
+Sending_textbox = tk.Text(root, height=6.5, width=60)
 
 # Create the connect button
 connect_button = tk.Button(root, text="Connect", command=connect)
@@ -102,10 +102,10 @@ ip_label.grid(row=1, column=0)
 ip_textbox.grid(row=1, column=1)
 port_label.grid(row=2, column=0)
 port_textbox.grid(row=2, column=1)
-input_label.grid(row=3, column=0, pady=10)
-input_textbox.grid(row=3, column=1, pady=10)
-output_label.grid(row=4, column=0, pady=10)
-output_textbox.grid(row=4, column=1, pady=10)
+Receiving_label.grid(row=3, column=0, pady=10)
+Receiving_textbox.grid(row=3, column=1, pady=10)
+Sending_label.grid(row=4, column=0, pady=10)
+Sending_textbox.grid(row=4, column=1, pady=10)
 
 # Place the connect and send buttons in the last row
 connect_button.grid(row=2, column=2)
@@ -114,7 +114,7 @@ send_button.grid(row=5, column=1,padx=10,pady=10)
 # Create a socket object and set it to None
 client_socket = None
 
-# Create a queue to hold output messages
-output_queue = queue.Queue()
+# Create a queue to hold Sending messages
+Sending_queue = queue.Queue()
 
 root.mainloop()

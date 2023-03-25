@@ -36,7 +36,7 @@ def send():
     # Send data entered in the output textbox to the server
     while True:
         data = output_queue.get()
-        if data == "quit":
+        if data == "QUIT":
             client_socket.send(data.encode("utf-8"))
             client_socket.close()
             print("Disconnected to the Server")
@@ -53,14 +53,19 @@ def send_message():
 
 
 def close():
+    client_socket.close()
+    print("Disconnected from the Server")
     root.destroy()
+    
+
+    
  
 
 root = tk.Tk()
 
 root.title('Instant LAN Messenger Client')
 
-root.geometry('650x400')
+root.geometry('690x450')
 
 # Create the "Enter IP and Port" label
 enter_label = tk.Label(root, text="Enter IP and Port:")
@@ -89,7 +94,7 @@ send_button = tk.Button(root, text="Send", command=send_message)
 
 
 button = tk.Button(root, text = 'Terminate session', command = close)
-button.grid(row=4, column=2)
+button.grid(row=5, column=2)
 
 # Place the labels and text boxes in the window
 enter_label.grid(row=0, column=0, columnspan=2)
@@ -103,8 +108,8 @@ output_label.grid(row=4, column=0, pady=10)
 output_textbox.grid(row=4, column=1, pady=10)
 
 # Place the connect and send buttons in the last row
-connect_button.grid(row=5, column=0, pady=10)
-send_button.grid(row=5, column=1, pady=10)
+connect_button.grid(row=2, column=2)
+send_button.grid(row=5, column=1,padx=10,pady=10)
 
 # Create a socket object and set it to None
 client_socket = None

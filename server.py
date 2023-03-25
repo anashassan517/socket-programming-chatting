@@ -105,7 +105,7 @@ sending_label.grid(row=3, column=0, pady=10)
 sending_textbox.grid(row=3, column=1, pady=10)
 
 # Place the start and send buttons in the last row
-start_button.grid(row=5, column=0, pady=10)
+start_button.grid(row=1, column=2, pady=10)
 send_button.grid(row=5, column=1, pady=10)
 
 # Create a socket object and set it to None
